@@ -1,30 +1,42 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using BOL;
+using DAL;
 using System.Web.Mvc;
+
 
 namespace Staffing.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly StaffingRepository _db;
+
+        public HomeController()
+        {
+            _db = new StaffingRepository();
+        }
+
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult About()
+        public JsonResult List()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            return Json(_db.GetAll(), JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult Contact()
+        public JsonResult Add(Employee record)
         {
-            ViewBag.Message = "Your contact page.";
+            return Json(_db.Create(record), JsonRequestBehavior.AllowGet);
+        }
 
-            return View();
+        public JsonResult GetOne(int id)
+        {
+            return Json(_db.FindOne(id), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult Delete(int id)
+        {
+            return Json(_db.Delete(id), JsonRequestBehavior.AllowGet);
         }
     }
 }
