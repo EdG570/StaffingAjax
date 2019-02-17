@@ -30,16 +30,18 @@ function loadData() {
 
 //Add Data Function
 function Add() {
-   // var res = validate();
-    //if (res == false) {
-    //    return false;
-    //}
+    var res = validate();
+    if (res == false) {
+        return false;
+    }
+
     var empObj = {
         FirstName: $('#FirstName').val(),
         LastName: $('#LastName').val(),
         State: $('#State').val(),
         Phone: $('#Phone').val()
     };
+
     $.ajax({
         url: "/Home/Add",
         data: JSON.stringify(empObj),
@@ -91,4 +93,38 @@ function clearTextBox() {
     $('#LastName').css('border-color', 'lightgrey');
     $('#State').css('border-color', 'lightgrey');
     $('#Phone').css('border-color', 'lightgrey');
+}
+
+//Valdidation using jquery
+function validate() {
+    var isValid = true;
+    if ($('#FirstName').val().trim() == "") {
+        $('#FirstName').css('border-color', 'Red');
+        isValid = false;
+    }
+    else {
+        $('#FirstName').css('border-color', 'lightgrey');
+    }
+    if ($('#LastName').val().trim() == "") {
+        $('#LastName').css('border-color', 'Red');
+        isValid = false;
+    }
+    else {
+        $('#LastName').css('border-color', 'lightgrey');
+    }
+    if ($('#State').val().trim() == "") {
+        $('#State').css('border-color', 'Red');
+        isValid = false;
+    }
+    else {
+        $('#State').css('border-color', 'lightgrey');
+    }
+    if ($('#Phone').val().trim() == "") {
+        $('#Phone').css('border-color', 'Red');
+        isValid = false;
+    }
+    else {
+        $('#Phone').css('border-color', 'lightgrey');
+    }
+    return isValid;
 }
